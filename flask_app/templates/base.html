@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link id="dynamic-style" rel="stylesheet" href="{{ url_for('static', filename='css/style-late-night.css') }}">
+    <script>
+        let dynamicStyle = document.getElementById("dynamic-style");
+        t = new Date().toLocaleTimeString().slice(0,5)
+
+        if ( (t >= "00:00") && (t < "03:00") ) {
+            dynamicStyle.href = "static/css/style-night.css";
+        } else if ( (t >= "03:00") && (t < "06:00") ) {
+            dynamicStyle.href = "static/css/style-late-night.css";
+        } else if ( (t >= "06:00") && (t < "09:00") ) {
+            dynamicStyle.href = "static/css/style-morning.css";
+        } else if ( (t >= "09:00") && (t < "12:00") ) {
+            dynamicStyle.href = "static/css/style-late-morning.css";
+        } else if ( (t >= "12:00") && (t < "15:00") ) {
+            dynamicStyle.href = "static/css/style-afternoon.css";
+        } else if ( (t >= "15:00") && (t < "18:00") ) {
+            dynamicStyle.href = "static/css/style-late-afternoon.css";
+        } else if ( (t >= "18:00") && (t < "21:00") ) {
+            dynamicStyle.href = "static/css/style-evening.css";
+        } else if ( (t >= "21:00") && (t < "00:00") ) {
+            dynamicStyle.href = "static/css/style-late-evening.css";
+        } else {
+            dynamicStyle.href = "static/css/style-night.css";
+        }
+    </script>
+</head>
+<body>
+    <div class="background">
+    {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>

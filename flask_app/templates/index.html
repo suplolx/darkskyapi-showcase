@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        
+        <section class="weather-section">
+            <h1 class="card-header"><a href="{{ url_for('index') }}">DarkSkyAPI Showcase</a></h1>
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.location }}
+                    {{ form.submit(class_="butn") }}
+                </p>
+            </form>
+            
+                 
+            {% if context %}
+                <div class="weather-details">
+                    <h1 class="full">{{ context.location }}{% if context.district %}, {{ context.district }} {% endif %} {% if context.district_2 %} ({{ context.district_2 }}) {% endif %}</h1>
+                    <div class="left">
+                        <h1><img id="current-icon" src="/static/img/{{context['current'].icon}}.png" alt=""><span id="current-temp">{{ context["current"].temperature|int }}°C </span><span id="current-apparentTemp"class="cursive small">Voelt als {{ context["current"].apparentTemperature|int }}°C</span></h1>
+                        <p id="current-time">{{ days["NL"]["long"][context["current"].weekday] }} <span id="time">{{ context["hourly"].datetimes(date_fmt="%H:%M")[0] }}</span></p>                       
+                        <h3 id="current-summary">{{ context["current"].summary }}</h3>
+                        <h4 id="hourly-summary">{{ context["hourly"].general_summary }}</h4>
+                    </div>
+                    <div class="right">
+                        <p id="current-humidity">Luchtvochtigheid: {{ context["humidity"] }}%</p>
+                        <p id="current-precipProb">Regen kans: {{ context["precipProbability"] }}%</p>
+                        <p id="current-windspeed">Windsnelheid: {{ context["current"].windSpeed }} km/u</p>
+                        <p id="current-uvIndex">UV index: {{ context["current"].uvIndex }}</p>
+                    </div>
+                    <div class="slider-container full">
+                        <input type="range" min="0" max="24" value="0" class="slider full" id="myRange">
+                        
+                    </div>
+                    <ul class="range-labels full">
+                        <li>0</li>
+
+                        <li>+3u</li>
+
+                        <li>+6u</li>
+
+                        <li>+9u</li>
+
+                        <li>+12u</li>
+
+                        <li>+15u</li>
+
+                        <li>+18u</li>
+
+                        <li>+21u</li>
+
+                        <li>+24u</li>
+                    </ul>
+                </div>
+                
+                <div class="weather-forecast">    
+                    
+                    <div class="forecast-data">
+                        {% for day, icon, temp_max, temp_min, pop, temp_high_time, temp_low_time in context["forecast"] %}
+                            <div onclick="setValsDay({{ loop.index-1 }})" class="day">
+                                <p style="font-weight:500;">{{ days["NL"]["short"][day] }}</p>
+                                <p><img src="/static/img/{% if icon == 'partly-cloudy-night' %}clear-day.png{% else %}{{icon}}.png{% endif %}" alt=""></p>
+                                <p class="max-temp">{{ temp_max|int }}°</p>
+                                <p class="min-temp">{{ temp_min|int }}°</p>
+                                <p class="pop">{{ pop }}%</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <a style="text-align:center" class="cursive small" href="https://darksky.net/poweredby/">Powered by Dark Sky</a>
+                </div>
+                
+                <script src="{{ url_for('static', filename='js/elements.js') }}"></script>
+                
+                <script>
+                    let weatherHourly = {{ context["hourly"]["data"]|tojson }};
+                    let weatherDaily = {{ context["daily"]["data"]|tojson }};
+                </script>
+                
+                <script>                  
+                    function setValsHour(n) {
+                        let date = new Date(weatherHourly[n].time * 1000);
+                        var timeChange = document.getElementById("time");
+
+                        currentTemp.innerHTML = `${Math.round(weatherHourly[n].temperature)}°C`;
+                        currentApparentTemp.innerHTML = ` voelt als ${Math.round(weatherHourly[n].apparentTemperature)}°C`
+                        currentIcon.src = `/static/img/${weatherHourly[n].icon}.png`;
+                        currentWindspeed.innerHTML = `Windsnelheid: ${weatherHourly[n].windSpeed} km/u`;
+                        currentPrecip.innerHTML = `Regen kans: ${Math.round(weatherHourly[n].precipProbability * 100)}%`;
+                        currentUvIndex.innerHTML = `UV index: ${weatherHourly[n].uvIndex}`;
+                        currentHumidity.innerHTML = `Luchtvochtigheid: ${Math.round(weatherHourly[n].humidity * 100)}%`;
+                        currentTime.innerHTML = `${date.toLocaleString('nl', {weekday: 'long'})} <span id='time'>${date.toLocaleTimeString().slice(0, 5)}</span>`;
+                        currentSummary.innerHTML = weatherHourly[n].summary;
+
+                        if ( (timeChange.innerHTML >= "00:00") && (timeChange.innerHTML < "03:00") ) {
+                            dynamicStyle.href = "static/css/style-night.css";
+                            console.log("say whut");
+                        } else if ( (timeChange.innerHTML >= "03:00") && (timeChange.innerHTML < "06:00") ) {
+                            dynamicStyle.href = "static/css/style-late-night.css";
+                            console.log("say whut");
+                        } else if ( (timeChange.innerHTML >= "06:00") && (timeChange.innerHTML < "09:00") ) {
+                            dynamicStyle.href = "static/css/style-morning.css";
+                        } else if ( (timeChange.innerHTML >= "09:00") && (timeChange.innerHTML < "12:00") ) {
+                            dynamicStyle.href = "static/css/style-late-morning.css";
+                        } else if ( (timeChange.innerHTML >= "12:00") && (timeChange.innerHTML < "15:00") ) {
+                            dynamicStyle.href = "static/css/style-afternoon.css";
+                        } else if ( (timeChange.innerHTML >= "15:00") && (timeChange.innerHTML < "18:00") ) {
+                            dynamicStyle.href = "static/css/style-late-afternoon.css";
+                        } else if ( (timeChange.innerHTML >= "18:00") && (timeChange.innerHTML < "21:00") ) {
+                            dynamicStyle.href = "static/css/style-evening.css";
+                        } else if ( (timeChange.innerHTML >= "21:00") && (timeChange.innerHTML < "24:00") ) {
+                            dynamicStyle.href = "static/css/style-late-evening.css";
+                            console.log("hoi");
+                        } else {
+                            dynamicStyle.href = "static/css/style-night.css";
+                            console.log("sup");
+                        }
+                    }
+
+                    function setValsDay(n) {
+                        
+                        if (n === 0) {
+                            rangeSlider.style.display = "block";
+                        } else {
+                            rangeSlider.style.display = "none";
+                        }
+                        
+                        let date = new Date(weatherDaily[n].time * 1000);
+                        
+                        currentTemp.innerHTML = `${Math.round(weatherDaily[n].temperatureHigh)}°C`;
+                        currentApparentTemp.innerHTML = ` voelt als ${Math.round(weatherDaily[n].apparentTemperatureHigh)}°C`;
+                        currentIcon.src = `/static/img/${weatherDaily[n].icon}.png`;
+                        currentWindspeed.innerHTML = `Windsnelheid: ${weatherDaily[n].windSpeed} km/u`;
+                        currentPrecip.innerHTML = `Regen kans: ${Math.round(weatherDaily[n].precipProbability * 100)}%`;
+                        currentUvIndex.innerHTML = `UV index: ${weatherDaily[n].uvIndex}`;
+                        currentHumidity.innerHTML = `Luchtvochtigheid: ${Math.round(weatherDaily[n].humidity * 100)}%`;
+                        currentTime.innerHTML = `${date.toLocaleString('nl', {weekday: 'long'})}`;
+                        currentSummary.innerHTML = weatherDaily[n].summary;
+                    }
+
+                    rangeSlider.oninput = function () {
+                        setValsHour(this.value);
+                    }
+                    
+                    
+
+                </script>
+
+            {% endif %}
+        </section>
+
+
+
+
+{% endblock content %}

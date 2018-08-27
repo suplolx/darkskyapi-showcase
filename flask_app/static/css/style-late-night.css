@@ -1,0 +1,69 @@
+body {
+    color:white;
+}
+
+.weather-section {
+    border:1.5px solid #ffffff7a;
+    background:linear-gradient(rgba(14, 29, 36, 0.95), rgba(8, 7, 12, 0.95));
+}
+
+.forecast-data {
+    color:whitesmoke;
+}
+
+.day {
+    border:1px rgba(31, 30, 30, 0.4) solid;
+    background: rgba(43, 40, 71, 0.9);
+}
+
+.day:hover, .day:focus {
+    background-color:rgba(83, 91, 150, 0.9); 
+    transition:background-color .5s ease-out;
+    border:1px rgba(255, 255, 255, 0.4) solid;
+}
+
+.max-temp {
+    color:#e2e2e2;
+}
+
+.min-temp {
+    color:#a29c9c;
+}
+
+.pop {
+    color:#88cdff;
+}
+
+
+.butn {
+    color: #ffffff;
+    background: #3f3f3f;
+  }
+  
+.butn:hover {
+    background: gray;
+}
+
+.background {
+    background-image:url('../img/late_night.png');
+    height:100vh;
+    background-size:cover;
+    background-position:center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align:center;
+    padding:0 20px;
+}
+
+.slider {
+    background: #f3f3f3;
+}
+
+.slider::-webkit-slider-thumb {
+    background: darkgray;
+}
+
+
+

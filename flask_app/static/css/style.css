@@ -1,0 +1,234 @@
+* {
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height:1.6;
+    margin:0;
+}
+
+.card-header {
+    text-align: center;
+}
+
+img {
+    height:74px;
+}
+
+form {
+    padding-bottom:10px;
+}
+
+.cursive {
+    font-style:italic;
+}
+
+.small {
+    font-size: 12px;
+}
+
+input[type="text"] {
+    border:none;
+    padding:.5em;
+    margin:10px;
+    width:80%;
+    font-size:20px;
+}
+
+.weather-section {
+    display: grid;
+    max-width: 50%;
+    margin-top:5px;
+    border-radius:5px;
+}
+
+.weather-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.weather-details > h1 {
+    text-align: center;
+    padding:.5em;
+    margin:0;
+}
+
+.weather-forecast {
+    display: grid;
+    grid-gap:5px;
+    grid-template-rows: 4fr;
+    padding:1em;
+}
+
+.forecast-data {
+    display: grid;
+    grid-gap:15px;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    overflow: auto;
+    white-space: nowrap;
+    padding-bottom:15px;
+}
+
+.forecast-data > p {
+    margin:auto;
+}
+
+.day > * {
+    margin:0;
+}
+
+.day {
+    cursor: pointer;
+    box-shadow: 0 0 5px 0 rgba(72, 94, 116, 0.7);
+}
+
+.day:hover, .day:focus {
+    border-radius:5px;
+}
+
+.weather-details > .full {
+    grid-column: 1/3;
+}
+
+.left {
+    text-align: left;
+    padding:0 1em;
+}
+
+.left > h1 {
+    font-size:52px;
+    font-weight:550;
+    margin:0 0 5px 0;
+}
+
+.left > h2 {
+    margin-top:0;
+}
+
+.left > h3 {
+    margin:0;
+}
+
+.left > h4 {
+    margin:0;
+}
+
+.right {
+    text-align: right;
+    padding:0 1em;
+    margin:auto;
+}
+
+.right {
+    font-weight: 400;
+}
+
+.butn {
+    -webkit-border-radius: 28;
+    -moz-border-radius: 28;
+    border-radius: 10px;
+    font-family: Arial;
+    font-size: 15px;
+    padding: .5em 1em;
+    text-decoration: none;
+    border:none;
+    cursor: pointer;
+  }
+  
+.butn:hover {
+    text-decoration: none;
+}
+
+.slider-container {
+    width:100%;
+    padding:1em 1em 0 1em;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width:100%;
+    height:10px;
+    outline:none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius:5px;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.range-labels {
+    padding:0;
+    list-style:none;
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-gap:35px;
+    margin:10px 0;
+}
+
+.range-labels > li {
+    position: relative;
+    float: left;
+    width:100%;
+    text-align:center;
+    font-size:11px;
+}
+
+a {
+    text-decoration:none;
+    color:inherit;
+}
+
+.tooltip {
+    position: relative;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+@media only screen and (max-width: 750px) {
+    .weather-section {
+        display:block;
+        max-width: 85%;
+    }
+
+    .weather-details {
+        display:block;
+    }
+
+    .right {
+        text-align: left;
+    }
+}
